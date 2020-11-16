@@ -1,0 +1,7 @@
+POST https://localhost:5001/api/todo
+Content-Type: application/json; charset=utf-8
+
+{
+  "name":"Alex doit résussir a 2 son bullshit",
+  "isComplete":false
+}
