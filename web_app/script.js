@@ -34,6 +34,11 @@ function getTodos() {
   const app = document.getElementById('app');
   const todosWrapper = document.createElement('div');
   const loading = document.createElement('p');
+
+  try {
+    document.getElementById('todosWrapper').remove();
+  } catch (e) {}
+
   loading.innerText = 'loading...';
   app.append(loading);
 
@@ -41,17 +46,19 @@ function getTodos() {
     todos.forEach((t) => {
       app.append(createTodo(t));
     });
-    loading.childElementCount();
+    loading.remove();
   });
 }
 
 function createTodo(todo) {
   const wrapper = document.createElement('div');
+  wrapper.setAttribute('id', 'todosWrapper');
   wrapper.style.border = '1px solid black';
   wrapper.style.display = 'flex';
   const name = document.createElement('p');
   name.innerText = todo.name;
-  const isComplete = document.createElement('a');
+  const isComplete = document.createElement('p');
+  isComplete.style.marginRight = '10px';
   isComplete.innerText = todo.isComplete;
 
   wrapper.append(isComplete);

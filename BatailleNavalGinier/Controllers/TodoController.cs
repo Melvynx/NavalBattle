@@ -12,11 +12,11 @@ namespace BatailleNavalGinier.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Todo : ControllerBase
+    public class TodoController : ControllerBase
     {
         private readonly TodoContext _context;
 
-        public Todo(TodoContext context)
+        public TodoController(TodoContext context)
         {
             _context = context;
         }
@@ -83,7 +83,8 @@ namespace BatailleNavalGinier.Controllers
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            // return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
         }
 
         // DELETE: api/Todo/5
