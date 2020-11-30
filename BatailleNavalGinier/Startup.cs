@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TodoApi.Models;
+using BatailleNavalGinier.Models;
 
 namespace BatailleNavalGinier
 {
@@ -39,6 +40,8 @@ namespace BatailleNavalGinier
         {
             services.AddDbContext<TodoContext>(opt =>
                                     opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<CelluleContext>(opt =>
+                                    opt.UseInMemoryDatabase("CelluleList"));
             services.AddControllers();
 
             services.AddCors(options =>

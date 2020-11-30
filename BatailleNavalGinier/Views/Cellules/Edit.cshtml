@@ -1,0 +1,54 @@
+﻿@model BatailleNavalGinier.Models.Cellule
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Cellule</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdGame" class="control-label"></label>
+                <input asp-for="IdGame" class="form-control" />
+                <span asp-validation-for="IdGame" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Xcoords" class="control-label"></label>
+                <input asp-for="Xcoords" class="form-control" />
+                <span asp-validation-for="Xcoords" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="y_coords" class="control-label"></label>
+                <input asp-for="y_coords" class="form-control" />
+                <span asp-validation-for="y_coords" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="is_boat" /> @Html.DisplayNameFor(model => model.is_boat)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="is_hit" /> @Html.DisplayNameFor(model => model.is_hit)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
