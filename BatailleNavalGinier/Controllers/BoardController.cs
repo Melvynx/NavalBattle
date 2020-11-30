@@ -81,6 +81,7 @@ namespace BatailleNavalGinier.Controllers
         {
             _context.Boards.Add(board);
             await _context.SaveChangesAsync();
+            
 
             return CreatedAtAction("GetBoard", new { id = board.Id }, board);
         }
