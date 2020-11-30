@@ -13,6 +13,7 @@ namespace BatailleNavalGinier.Models
         {
         }
 
-        public DbSet<Board> TodoItems { get; set; }
+        public DbSet<Board> Boards { get; set; }
     }
 }
+

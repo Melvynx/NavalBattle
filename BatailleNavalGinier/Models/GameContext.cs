@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BatailleNavalGinier.Models
 {
@@ -13,6 +9,6 @@ namespace BatailleNavalGinier.Models
         {
         }
 
-        public DbSet<Game> TodoItems { get; set; }
+        public DbSet<Game> Games { get; set; }
     }
 }

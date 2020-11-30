@@ -1,4 +1,5 @@
-﻿namespace BatailleNavalGinier.Models
+﻿
+namespace BatailleNavalGinier.Models
 {
     public class TodoItem
     {

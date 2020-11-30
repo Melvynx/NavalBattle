@@ -1,20 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BatailleNavalGinier.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using TodoApi.Models;
-using BatailleNavalGinier.Models;
 
 namespace BatailleNavalGinier
 {
@@ -43,6 +34,11 @@ namespace BatailleNavalGinier
                                     opt.UseInMemoryDatabase("TodoList"));
             services.AddDbContext<CelluleContext>(opt =>
                                     opt.UseInMemoryDatabase("CelluleList"));
+            services.AddDbContext<BoardContext>(opt =>
+                                    opt.UseInMemoryDatabase("BoardList"));
+            services.AddDbContext<GameContext>(opt =>
+                                    opt.UseInMemoryDatabase("GameList"));
+
             services.AddControllers();
 
             services.AddCors(options =>

@@ -1,22 +1,15 @@
 <template>
-  <div id="game">
-    <Board idBoard="player1" />
-    <State />
-    <Board idBoard="player2" />
+  <div class="hello">
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
-import Board from './Board.vue';
-import State from './State.vue';
-
 export default {
-  name: 'Game',
-  components: {
-    Board,
-    State,
+  name: 'HelloWorld',
+  props: {
+    msg: String,
   },
-  props: {},
 };
 </script>
 
