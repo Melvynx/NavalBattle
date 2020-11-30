@@ -1,7 +1,6 @@
-﻿using BatailleNavalGinier.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace TodoApi.Models
+namespace BatailleNavalGinier.Models
 {
     public class TodoContext : DbContext
     {

@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BatailleNavalGinier.Models;
-using TodoApi.Models;
 
 namespace BatailleNavalGinier.Controllers
 {
@@ -21,14 +18,14 @@ namespace BatailleNavalGinier.Controllers
             _context = context;
         }
 
-        // GET: api/Todo
+        // GET: api/Todo - index
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
             return await _context.TodoItems.ToListAsync();
         }
 
-        // GET: api/Todo/5
+        // GET: api/Todo/5 - show
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
@@ -42,7 +39,7 @@ namespace BatailleNavalGinier.Controllers
             return todoItem;
         }
 
-        // PUT: api/Todo/5
+        // PUT: api/Todo/5 - edit
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -74,7 +71,7 @@ namespace BatailleNavalGinier.Controllers
             return NoContent();
         }
 
-        // POST: api/Todo
+        // POST: api/Todo - create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -83,11 +80,10 @@ namespace BatailleNavalGinier.Controllers
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
         }
 
-        // DELETE: api/Todo/5
+        // DELETE: api/Todo/5 - delete
         [HttpDelete("{id}")]
         public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
         {

@@ -1,20 +1,51 @@
 <template>
   <div id="game">
-    <Board idBoard="player1" />
-    <State />
-    <Board idBoard="player2" />
+    <div v-if="this.idGame === null">
+      <button v-on:click="this.startGame">Start new Game</button>
+    </div>
+    <div v-else>
+      <Board
+        idBoard="player1"
+        v-bind:idGame="String(idGame)"
+        :isCurrentUser="false"
+      />
+      <State />
+      <Board
+        idBoard="player2"
+        v-bind:idGame="String(idGame)"
+        :isCurrentUser="true"
+      />
+      <button v-on:click="this.stopGame">stop game</button>
+    </div>
   </div>
 </template>
 
 <script>
 import Board from './Board.vue';
 import State from './State.vue';
+import { getItemLocalStorage } from '../utils/localStorage';
 
 export default {
   name: 'Game',
   components: {
     Board,
     State,
+  },
+  data: function() {
+    return {
+      idGame: getItemLocalStorage('game-key', null),
+    };
+  },
+  methods: {
+    startGame: function() {
+      const id = '1';
+      window.localStorage.setItem('game-key', id);
+      this.idGame = id;
+    },
+    stopGame: function() {
+      window.localStorage.removeItem('game-key');
+      this.idGame = null;
+    },
   },
   props: {},
 };
