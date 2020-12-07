@@ -14,10 +14,12 @@ namespace BatailleNavalGinier.Controllers
     public class GameController : ControllerBase
     {
         private readonly GameContext _context;
+        private readonly BoardController _boardController;
 
-        public GameController(GameContext context)
+        public GameController(GameContext context, BoardController boardController)
         {
             _context = context;
+            _boardController = boardController;
         }
 
         // GET: api/Game
@@ -82,6 +84,11 @@ namespace BatailleNavalGinier.Controllers
             _context.Games.Add(game);
             
             await _context.SaveChangesAsync();
+
+            var boardPlayer1 = new Board(_boardController.GetUniqueId(), game.Id, "player1");
+            var boardPlayer2 = new Board(_boardController.GetUniqueId(), game.Id, "player2");
+            await _boardController.PostBoard(boardPlayer1);
+            await _boardController.PostBoard(boardPlayer2);
 
             return CreatedAtAction("GetGame", new { id = game.Id }, game);
         }
