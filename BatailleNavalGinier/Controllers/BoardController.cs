@@ -14,8 +14,9 @@ namespace BatailleNavalGinier.Controllers
     public class BoardController : ControllerBase
     {
         private readonly BoardContext _context;
+        private readonly CelluleController _celluleController;
 
-        public BoardController(BoardContext context)
+        public BoardController(BoardContext context, CelluleController celluleController)
         {
             _context = context;
         }
@@ -81,7 +82,17 @@ namespace BatailleNavalGinier.Controllers
         {
             _context.Boards.Add(board);
             await _context.SaveChangesAsync();
-            
+
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Cellule cex = new Cellule(1, board.Id, j, i, false, false);
+                    await _celluleController.PostCellule(cex);
+                }
+
+            }
 
             return CreatedAtAction("GetBoard", new { id = board.Id }, board);
         }

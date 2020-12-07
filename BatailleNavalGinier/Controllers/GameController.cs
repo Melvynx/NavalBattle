@@ -80,6 +80,7 @@ namespace BatailleNavalGinier.Controllers
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
             _context.Games.Add(game);
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetGame", new { id = game.Id }, game);
