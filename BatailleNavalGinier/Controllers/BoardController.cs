@@ -79,6 +79,7 @@ namespace BatailleNavalGinier.Controllers
         [HttpPost]
         public async Task<ActionResult<Board>> PostBoard(Board board)
         {
+            
             _context.Boards.Add(board);
             await _context.SaveChangesAsync();
             
@@ -100,6 +101,11 @@ namespace BatailleNavalGinier.Controllers
             await _context.SaveChangesAsync();
 
             return board;
+        }
+
+        public long GetUniqueId()
+        {
+            return _context.Boards.Last().Id + 1;
         }
 
         private bool BoardExists(long id)

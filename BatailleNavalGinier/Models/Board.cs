@@ -9,5 +9,13 @@ namespace BatailleNavalGinier.Models
     {
         public long Id { get; set; }
         public long IdGame { get; set; }
+        public string Player { get; set; }
+
+        public Board(long id, long idGame, string player)
+        {
+            Id = id;
+            IdGame = idGame;
+            Player = player;
+        }
     }
 }
