@@ -8,15 +8,23 @@
         public int Ycoords { get; set; }
         public bool IsBoat { get; set; }
         public bool IsHit { get; set; }
+        public Orientation Orientation { get; set; }
 
-        public Cellule(long id, long idboard, int xcoords, int ycoords, bool isboat, bool ishit)
+        public Cellule(long id, long idBoard, int xcoords, int ycoords, bool isBoat, bool isHit)
         {
-            this.Id = id;
-            this.IdBoard = idboard;
-            this.Xcoords = xcoords;
-            this.Ycoords = ycoords;
-            this.IsBoat = isboat;
-            this.IsHit = ishit;
+            Id = id;
+            IdBoard = idBoard;
+            Xcoords = xcoords;
+            Ycoords = ycoords;
+            IsBoat = isBoat;
+            IsHit = isHit;
+            Orientation = Orientation.Undefined;
+        }
+
+        public void AddBoat(Orientation orientation)
+        {
+            IsBoat = true;
+            Orientation = orientation;
         }
     }
 }

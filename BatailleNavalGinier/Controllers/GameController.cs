@@ -31,7 +31,7 @@ namespace BatailleNavalGinier.Controllers
 
         // GET: api/Game/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(long id)
+        public async Task<ActionResult<GameJson>> GetGame(long id)
         {
             var game = await _context.Games.FindAsync(id);
 
@@ -40,12 +40,14 @@ namespace BatailleNavalGinier.Controllers
                 return NotFound();
             }
 
-            return game;
+
+            List<BoardJson> boardStates = _boardController.GetBoardByGame(game.Id);
+            GameJson gameJson = new GameJson(game, boardStates);
+
+            return gameJson;
         }
 
         // PUT: api/Game/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGame(long id, Game game)
         {
@@ -76,21 +78,22 @@ namespace BatailleNavalGinier.Controllers
         }
 
         // POST: api/Game
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
+        public async Task<ActionResult<GameJson>> PostGame(Game game)
         {
             _context.Games.Add(game);
             
             await _context.SaveChangesAsync();
 
             var boardPlayer1 = new Board(_boardController.GetUniqueId(), game.Id, "player1");
-            var boardPlayer2 = new Board(_boardController.GetUniqueId(), game.Id, "player2");
-            await _boardController.PostBoard(boardPlayer1);
-            await _boardController.PostBoard(boardPlayer2);
+            var boardPlayer2 = new Board(_boardController.GetUniqueId() + 1, game.Id, "player2");
+            await _boardController.CreateBoard(boardPlayer1);
+            await _boardController.CreateBoard(boardPlayer2);
 
-            return CreatedAtAction("GetGame", new { id = game.Id }, game);
+            List<BoardJson> boardStates = _boardController.GetBoardByGame(game.Id);
+            GameJson gameJson = new GameJson(game, boardStates);
+
+            return gameJson;
         }
 
         // DELETE: api/Game/5

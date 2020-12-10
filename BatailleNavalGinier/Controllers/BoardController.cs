@@ -19,6 +19,7 @@ namespace BatailleNavalGinier.Controllers
         public BoardController(BoardContext context, CelluleController celluleController)
         {
             _context = context;
+            _celluleController = celluleController;
         }
 
         // GET: api/Board
@@ -114,14 +115,68 @@ namespace BatailleNavalGinier.Controllers
             return board;
         }
 
+        public List<BoardJson> GetBoardByGame(long idGame)
+        {
+            // normaly : list of 2 items
+            var boards = _context.Boards.Where(board => board.IdGame == idGame).ToList();
+
+            BoardJson boardState1 = new BoardJson(boards.First(), _celluleController.GetCellulesByBoard(boards.First().Id));
+            // remove first item to take the new second item
+            boards.RemoveAt(0);
+            BoardJson boardState2 = new BoardJson(boards.First(), _celluleController.GetCellulesByBoard(boards.First().Id));
+
+            List<BoardJson> boardStates = new List<BoardJson>
+            {
+                boardState1,
+                boardState2
+            };
+
+            return boardStates;
+        }
+
+        public async Task CreateBoard(Board board, bool randomBoat = true)
+        {
+            _context.Boards.Add(board);
+            await _context.SaveChangesAsync();
+
+            List<Cellule> cellules = new List<Cellule>();
+
+            var cellCount = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Cellule cell = new Cellule(_celluleController.GetUniqueId() + cellCount, board.Id, j, i, false, false);
+                    cellules.Add(cell);
+                    cellCount++;
+                }
+            }
+            if (randomBoat)
+            {
+                new BoardGeneratorController().SetRandomBoatOnCellules(cellules);
+            }
+
+            foreach (Cellule cell in cellules)
+            {
+                await _celluleController.CreateCellule(cell);
+            }
+        }
+
         public long GetUniqueId()
         {
-            return _context.Boards.Last().Id + 1;
+            if (_context.Boards.Any())
+            {
+                return _context.Boards.Last().Id + 1;
+            } else
+            {
+                return 1;
+            }
         }
 
         private bool BoardExists(long id)
         {
             return _context.Boards.Any(e => e.Id == id);
         }
+
     }
 }

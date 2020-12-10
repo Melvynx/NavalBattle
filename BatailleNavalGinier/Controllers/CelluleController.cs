@@ -105,5 +105,29 @@ namespace BatailleNavalGinier.Controllers
         {
             return _context.Cellules.Any(e => e.Id == id);
         }
+
+        public List<Cellule> GetCellulesByBoard(long idBard)
+        {
+            return _context.Cellules.Where(cell => cell.IdBoard == idBard).ToList();
+        }
+
+        public async Task CreateCellule(Cellule cell)
+        {
+            _context.Cellules.Add(cell);
+            await _context.SaveChangesAsync();
+        }
+
+        public long GetUniqueId()
+        {
+            if (_context.Cellules.Any())
+            {
+                return _context.Cellules.Last().Id + 1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
     }
 }

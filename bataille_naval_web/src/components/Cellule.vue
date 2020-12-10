@@ -1,6 +1,17 @@
 <template>
   <div class="cell">
-    <p v-if="cell.isBoat">🚢</p>
+    <div>
+      <p v-if="isCurrentUser">
+        <span v-if="cell.isBoat">🚢</span>
+        <span v-if="cell.isHit">❌</span>
+      </p>
+      <p v-else>
+        <span v-if="cell.isHit">
+          <span v-if="cell.isBoat">❌🚢</span>
+          <span v-else>❌</span>
+        </span>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -9,12 +20,12 @@ export default {
   name: 'Cellule',
   props: {
     cell: Object,
+    isCurrentUser: Boolean,
   },
   methods: {},
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .cell {
   width: 45px;

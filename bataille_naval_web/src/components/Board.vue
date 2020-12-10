@@ -1,5 +1,6 @@
 <template>
   <div class="board-wrapper">
+    <p>{{ idBoard }}</p>
     <table class="board">
       <tbody>
         <tr v-for="n in 5" v-bind:key="n" class="line">
@@ -7,6 +8,7 @@
             v-for="cell in $options.filters.getColumns(cells, n)"
             v-bind:key="cell.id"
             v-bind:cell="cell"
+            v-bind:isCurrentUser="isCurrentUser"
           />
         </tr>
       </tbody>
@@ -25,6 +27,8 @@ export default {
   name: 'Board',
   props: {
     idBoard: String,
+    idGame: String,
+    isCurrentUser: Boolean,
   },
   components: {
     Cellule,
@@ -36,7 +40,6 @@ export default {
   },
   methods: {
     showData: function() {
-      console.log('show');
       console.log(this.cells);
     },
   },
@@ -57,5 +60,7 @@ export default {
 .board-wrapper {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
