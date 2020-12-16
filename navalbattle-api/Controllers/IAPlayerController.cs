@@ -60,7 +60,7 @@ namespace BatailleNavalGinier.Controllers
             Cellule cible = cellules.First(c => c.IsBoat && !c.IsDeadBoat);
 
 
-            return randomCell;
+            return new Cellule();
         }
 
         private object BoatHitNear(Cellule cible, List<List<Cellule>> cells, int nearLevel = 1)
