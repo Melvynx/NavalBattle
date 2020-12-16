@@ -1,4 +1,4 @@
-export function getItemLocalStorage(key: string, defaultValue?: unknown) {
+export function getItemLocalStorage(key, defaultValue) {
   const localStorageFilter = window.localStorage.getItem(key);
   const _default =
     typeof defaultValue === 'function' ? defaultValue() : defaultValue;
@@ -12,4 +12,15 @@ export function getItemLocalStorage(key: string, defaultValue?: unknown) {
   }
 
   return json ? json : _default;
+}
+
+export function stringifyJson(item) {
+  if (item) {
+    try {
+      return JSON.stringify(item);
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
 }

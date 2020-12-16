@@ -3,6 +3,7 @@
     public enum GameState
     {
         PLACE_BOAT = -1,
+        WAITING = 3,
         PLAYER2_TURN = 20,
         PLAYER2_HIT = 21,
         PLAYER2_SINK = 22,

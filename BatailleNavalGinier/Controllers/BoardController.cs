@@ -153,7 +153,7 @@ namespace BatailleNavalGinier.Controllers
             }
             if (randomBoat)
             {
-                new BoardGeneratorController().SetRandomBoatOnCellules(cellules);
+                new BoardGeneratorControllerV2().SetRandomBoat(cellules);
             }
 
             foreach (Cellule cell in cellules)
@@ -171,6 +171,36 @@ namespace BatailleNavalGinier.Controllers
             {
                 return 1;
             }
+        }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public bool IsBoardDead(long boardId)
+        {
+            var cells = _celluleController.GetCellulesByBoard(boardId);
+            // true - !false
+            return !cells.Any(c => c.IsBoat && !c.IsHit);
+        }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public Cellule IAAutoPlay(long idGame)
+        {
+            Board board = _context.Boards.ToList().Find(b => b.IdGame == idGame && b.Player == "player1");
+            if (board == null)
+            {
+                throw new Exception("Invalid idGame");
+            }
+
+            var cellules = _celluleController.GetCellulesByBoard(board.Id);
+
+            var randomCell = cellules[Utils.RandomNumber(0, cellules.Count - 1)];
+            randomCell.IsHit = true;
+            _celluleController.EditCellule(randomCell);
+
+            return randomCell;
         }
 
         private bool BoardExists(long id)

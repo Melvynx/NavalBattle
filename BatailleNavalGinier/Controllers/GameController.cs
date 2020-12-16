@@ -112,6 +112,47 @@ namespace BatailleNavalGinier.Controllers
             return game;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public void EditGame(long id, Game game)
+        {
+            var result = _context.Games.SingleOrDefault(g => g.Id == game.Id);
+            if (result != null)
+            {
+                try
+                {
+                    _context.Games.Attach(game);
+                    _context.Entry(game).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public Game FindGameById(long id, string test = "")
+        {
+            return _context.Games.ToList().Find(g => g.Id == id);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public bool IsGameWin(long idBoard)
+        {
+            return _boardController.IsBoardDead(idBoard);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public Cellule RunBoardIAPlay(long idGame)
+        {
+            return _boardController.IAAutoPlay(idGame);
+        }
+
         private bool GameExists(long id)
         {
             return _context.Games.Any(e => e.Id == id);

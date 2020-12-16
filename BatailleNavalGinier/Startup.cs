@@ -40,6 +40,7 @@ namespace BatailleNavalGinier
                                     opt.UseInMemoryDatabase("GameList"));
 
             services.AddMvcCore().AddControllersAsServices();
+
             services.AddControllers();
 
             services.AddCors(options =>

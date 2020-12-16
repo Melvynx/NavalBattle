@@ -5,21 +5,23 @@ import { getColorTheme } from './props';
  * {color} "primary" | "secondary" Default : "primary"
  * {size} "small" | "normal" Default "normal"
  */
-const ButtonOutlined = styled.button`
-  background-color: transparent;
-  border: 1px solid ${(props) => getColorTheme(props).main};
-  padding: 8px;
-  border-radius: 2px;
+const Button = styled.button`
+  background-color: ${(props) => getColorTheme(props).main};
+  padding-top: 0.75rem;
+  line-height: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: border 0.1s ease-in;
+  transition: background-color 0.1s ease-in;
   &:hover {
-    border: 1px solid ${(props) => getColorTheme(props).light};
+    background-color: ${(props) => getColorTheme(props).light};
   }
   &:focus {
     box-shadow: 0 0 0 0.15rem ${(props) => getColorTheme(props).light};
   }
 `;
 
-export { ButtonOutlined };
+export { Button };

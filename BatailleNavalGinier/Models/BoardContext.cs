@@ -8,12 +8,21 @@ namespace BatailleNavalGinier.Models
 {
     public class BoardContext : DbContext
     {
+
+        public DbSet<Cellule> Cellules { get; set; }
+        public DbSet<Board> Boards { get; set; }
+
         public BoardContext(DbContextOptions<BoardContext> options)
              : base(options)
         {
         }
 
-        public DbSet<Board> Boards { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Board>()
+                .HasMany(b => b.Cellules).WithOne(c => c.Board);
+        }
     }
 }
 

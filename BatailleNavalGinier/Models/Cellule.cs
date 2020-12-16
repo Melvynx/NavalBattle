@@ -3,28 +3,43 @@
     public class Cellule
     {
         public long Id { get; set; }
-        public long IdBoard { get; set; }
+        public long BoardId { get; set; }
         public int Xcoords { get; set; }
         public int Ycoords { get; set; }
         public bool IsBoat { get; set; }
         public bool IsHit { get; set; }
+        public bool IsDeadBoat { get; set; }
+        public string BoatIdentificator { get; set; }
         public Orientation Orientation { get; set; }
 
-        public Cellule(long id, long idBoard, int xcoords, int ycoords, bool isBoat, bool isHit)
+        public Board Board { get; set; }
+
+        public Cellule(long id, long boardId, int xcoords, int ycoords, bool isBoat, bool isHit)
         {
             Id = id;
-            IdBoard = idBoard;
+            BoardId = boardId;
             Xcoords = xcoords;
             Ycoords = ycoords;
             IsBoat = isBoat;
             IsHit = isHit;
+            IsDeadBoat = false;
             Orientation = Orientation.Undefined;
         }
 
-        public void AddBoat(Orientation orientation)
+        public Cellule()
+        {
+        }
+
+        public Cellule Copy()
+        {
+            return new Cellule(Id, BoardId, Xcoords, Ycoords, IsBoat, IsHit);
+        }
+
+        public void AddBoat(Orientation orientation, string boatIdentificator = "")
         {
             IsBoat = true;
             Orientation = orientation;
+            BoatIdentificator = boatIdentificator;
         }
     }
 }

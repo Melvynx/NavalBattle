@@ -11,6 +11,8 @@ namespace BatailleNavalGinier.Models
         public long IdGame { get; set; }
         public string Player { get; set; }
 
+        public List<Cellule> Cellules { get; set; }
+
         public Board(long id, long idGame, string player)
         {
             Id = id;

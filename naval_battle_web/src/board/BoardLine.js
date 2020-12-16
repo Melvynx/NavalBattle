@@ -1,10 +1,16 @@
 import Cellule from './Cellule';
 
-function BoardLine({ cells, currentPlayer }) {
+function BoardLine({ cells, isPlayer, isClickable, onClick }) {
   return (
     <tr>
       {cells.map((cell, index) => (
-        <Cellule currentPlayer={currentPlayer} cell={cell} key={cell.id} />
+        <Cellule
+          isPlayer={isPlayer}
+          isClickable={isClickable}
+          onClick={onClick}
+          cell={cell}
+          key={cell.id}
+        />
       ))}
     </tr>
   );

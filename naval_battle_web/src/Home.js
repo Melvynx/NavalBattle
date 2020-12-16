@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import Game from './board/Game';
 import { useNavalBattle } from './hooks/NavalBattleProvider';
-import { ButtonOutlined } from './styled-components/Button';
+import { Button } from './styled-components/Button';
 
 const Container = styled.div`
   justify-content: center;
-  margin: 16px;
+  margin: 0 16px 16px 16px;
   display: flex;
   max-width: 960px;
   flex-direction: column;
@@ -19,7 +19,10 @@ const HomeTitle = styled.h1`
 `;
 
 const HomeInfo = styled.p`
+  margin-bottom: 16px;
+  margin-top: 8px;
   color: white;
+  text-align: center;
 `;
 
 function Home() {
@@ -36,10 +39,9 @@ function Home() {
   return (
     <Container>
       <HomeTitle>Naval Battle</HomeTitle>
-      <HomeInfo>
-        You have not any current game in progress. Click to start a new game !
-      </HomeInfo>
-      <ButtonOutlined onClick={startNewGame}>Start new game</ButtonOutlined>
+      <HomeInfo>Hi! I'm happy to see you ❤️</HomeInfo>
+      <HomeInfo>If you are ready to start, click on the button 😄</HomeInfo>
+      <Button onClick={startNewGame}>Start new game</Button>
     </Container>
   );
 }
