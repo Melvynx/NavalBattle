@@ -81,12 +81,27 @@ const acceptedState = [
 function GameStateActions({ gameState }) {
   const { nextStep } = useNavalBattle();
 
+  const displayActions = acceptedState.includes(gameState);
+
+  React.useEffect(() => {
+    console.log('rerender here');
+    if (!displayActions) return;
+
+    let onKeyDown = (e) => {
+      if (e.code === 'Space') {
+        nextStep();
+      }
+    };
+    onKeyDown = onKeyDown.bind(nextStep);
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [displayActions, nextStep]);
+
   const handleClick = () => nextStep();
 
-  // console.log('Display sentence:', sentences[gameState]);
   const sentence = actionsSentences[gameState];
-  console.log(acceptedState, gameState);
-  if (!acceptedState.includes(gameState)) {
+
+  if (!displayActions) {
     return null;
   }
 
@@ -102,7 +117,7 @@ function GameStateActions({ gameState }) {
 }
 
 function ButtonWithTimer({ state, timeout = 3, onClick, children }) {
-  const { timer, startTimer } = useTimer({ timeout, onFinish: () => onClick() });
+  const { timer, startTimer } = useTimer({ timeout, onFinish: () => {} });
 
   React.useEffect(() => {
     startTimer();

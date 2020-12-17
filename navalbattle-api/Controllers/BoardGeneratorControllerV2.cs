@@ -21,16 +21,19 @@ namespace BatailleNavalGinier.Controllers
             foreach (int boatLength in boatsLength)
             {
                 string identificator = $"boat-{boatLength}-{Utils.RandomString(5)}";
-                var possibilities = _getBoatPossibility(cellsOfCells, boatLength);
+
+                List<List<Cellule>> waterCells = GetWaterCells(cellsOfCells);
+                var possibilities = GetBoatPossibility(waterCells, boatLength);
                 if (possibilities.Count == 1) {
                     continue;
                 }
-                var selectedPossibility = possibilities[Utils.RandomNumber(0, possibilities.Count - 1)];
 
+                var selectedPossibility = possibilities[Utils.RandomNumber(0, possibilities.Count - 1)];
+                var selectedPossibilityOrientation = Utils.GetCellsOrientation(selectedPossibility.First(), selectedPossibility.Last());
                 foreach (Cellule cell in selectedPossibility)
                 {
                     var index = cellules.FindIndex(c => c.Id == cell.Id);
-                    cellules[index].AddBoat(cell.Orientation, identificator);
+                    cellules[index].AddBoat(selectedPossibilityOrientation, identificator);
                 }
             }
 
@@ -42,16 +45,15 @@ namespace BatailleNavalGinier.Controllers
         /// <param name="cellules">toute les cellules</param>
         /// <param name="length">taille du bateau</param>
         /// <returns></returns>
-        private List<List<Cellule>> _getBoatPossibility(List<List<Cellule>> cellules, int length)
+        public List<List<Cellule>> GetBoatPossibility(List<List<Cellule>> cellules, int length)
         {
-            List<List<Cellule>> nullCells = _getWaterCells(cellules);
             List<List<Cellule>> result = new List<List<Cellule>>();
 
-            foreach (List<Cellule> cells in nullCells)
+            foreach (List<Cellule> cells in cellules)
             {
                 foreach (Cellule cell in cells)
                 {
-                    List<List<Cellule>> possibilities = _possibilitiesBoatForCell(cell, nullCells, length);
+                    List<List<Cellule>> possibilities = PossibilitiesBoatForCell(cell, cellules, length);
                     if (possibilities.Count != 0)
                     {
                         result = result.Concat(possibilities).ToList();
@@ -67,7 +69,7 @@ namespace BatailleNavalGinier.Controllers
         /// <param name="cell">cellule de base à tester</param>
         /// <param name="length">taille du bateau</param>
         /// <returns></returns>
-        private List<List<Cellule>> _possibilitiesBoatForCell(Cellule cell, List<List<Cellule>> nullCells, int length = 2)
+        private List<List<Cellule>> PossibilitiesBoatForCell(Cellule cell, List<List<Cellule>> nullCells, int length = 2)
         {
             if (cell == null)
             {
@@ -138,7 +140,7 @@ namespace BatailleNavalGinier.Controllers
             return result;
         }
 
-        private List<List<Cellule>> _getWaterCells(List<List<Cellule>> cellsOfCells)
+        private List<List<Cellule>> GetWaterCells(List<List<Cellule>> cellsOfCells)
         {
             List<List<Cellule>> cellulesList = new List<List<Cellule>>();
 
@@ -151,18 +153,5 @@ namespace BatailleNavalGinier.Controllers
 
             return cellulesList;
         }
-
-        private List<List<Cellule>> _getListOfListOfCells(List<Cellule> cellules)
-        {
-            List<List<Cellule>> cellulesList = new List<List<Cellule>>();
-
-            for (var i = 0; i <= 4; i++)
-            {
-                var sortedCellules = cellules.FindAll(cell => cell.Xcoords == i).OrderBy(cell => cell.Ycoords).ToList();
-                cellulesList.Add(sortedCellules);
-            }
-            return cellulesList;
-        }
-
     }
 }

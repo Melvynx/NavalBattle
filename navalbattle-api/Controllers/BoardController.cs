@@ -196,11 +196,11 @@ namespace BatailleNavalGinier.Controllers
 
             var cellules = _celluleController.GetCellulesByBoard(board.Id);
 
-            var randomCell = cellules[Utils.RandomNumber(0, cellules.Count - 1)];
-            randomCell.IsHit = true;
-            _celluleController.EditCellule(randomCell);
+            var result = new IAPlayerController().RunIA(cellules);
+            //var result = cellules[Utils.RandomNumber(0, cellules.Count - 1)];
+            _celluleController.HitCellule(result);
 
-            return randomCell;
+            return result;
         }
 
         private bool BoardExists(long id)

@@ -18,7 +18,7 @@ namespace BatailleNavalGinier.Controllers
         public static List<List<Cellule>> GetListOfListOfCells(List<Cellule> cellules)
         {
             List<List<Cellule>> cellulesList = new List<List<Cellule>>();
-
+                
             for (var i = 0; i <= 4; i++)
             {
                 var sortedCellules = cellules.FindAll(cell => cell.Xcoords == i).OrderBy(cell => cell.Ycoords).ToList();
@@ -29,9 +29,17 @@ namespace BatailleNavalGinier.Controllers
 
         public static string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+
+        public static Orientation GetCellsOrientation(Cellule first, Cellule second)
+        {
+            if (first.Ycoords != second.Ycoords) return Orientation.Vertical;
+            if (first.Xcoords != second.Xcoords) return Orientation.Horizontal;
+            return Orientation.Undefined;
         }
 
     }
