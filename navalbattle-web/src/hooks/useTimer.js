@@ -6,8 +6,6 @@ export default function useTimer({ timeout, onFinish }) {
 
   React.useEffect(() => {
     if (timer === 0) {
-      console.log('Endtimer :', timer);
-
       clearInterval(intervalRef.current);
       Number(timeout) && setTimer(timeout);
 

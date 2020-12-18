@@ -45,7 +45,7 @@ const fakeCell = {
 
 export function updateGameState(id, cell) {
   let body = stringifyJson(cell || fakeCell);
-  console.log('game fetch');
+
   return fetch(`${API_URL}/gamestate/${id}`, {
     method: 'PUT',
     body: body,
