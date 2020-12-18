@@ -1,12 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import WaterImage from '../images/water.jpg';
-import BoatImageHorizontal from '../images/boat_h.jpg';
-import BoatImageVertical from '../images/boat_v.jpg';
-import DeadBoatImage from '../images/dead_boat.jpg';
-import DeadNothingImage from '../images/dead_nothing.jpg';
-import DeadBoatAllImage from '../images/dead_boat_all.jpg';
-import HideWaterImage from '../images/hide_water.jpg';
+import { getCellImage, imageDescription } from './datas';
 
 const Container = styled.td`
   width: 50px;
@@ -22,36 +16,7 @@ const Container = styled.td`
   }
 `;
 
-function getImage(cell, isPlayer) {
-  if (cell.isDeadBoat) {
-    return DeadBoatAllImage;
-  }
-
-  if (!isPlayer) {
-    if (cell.isHit) {
-      return cell.isBoat ? DeadBoatImage : DeadNothingImage;
-    } else {
-      return HideWaterImage;
-    }
-  }
-
-  if (cell.isBoat) {
-    if (cell.isHit) {
-      return DeadBoatImage;
-    }
-    if (cell.orientation === 1) {
-      return BoatImageVertical;
-    }
-    return BoatImageHorizontal;
-  } else {
-    if (cell.isHit) {
-      return DeadNothingImage;
-    }
-    return WaterImage;
-  }
-}
-
-function Cellule({ cell, isPlayer, onClick, isClickable }) {
+function Cellule({ cell, displayBoat, onClick, isClickable }) {
   if (!cell) {
     return (
       <Container>
@@ -60,6 +25,8 @@ function Cellule({ cell, isPlayer, onClick, isClickable }) {
     );
   }
 
+  const image = getCellImage(cell, displayBoat);
+
   return (
     <Container
       onClick={() => isClickable && onClick(cell)}
@@ -67,9 +34,9 @@ function Cellule({ cell, isPlayer, onClick, isClickable }) {
     >
       <img
         alt="water"
-        title="just water..."
+        title={imageDescription[image]}
         style={{ width: '100%', height: '100%' }}
-        src={getImage(cell, isPlayer)}
+        src={image}
       />
     </Container>
   );

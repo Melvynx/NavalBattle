@@ -57,8 +57,10 @@ namespace BatailleNavalGinier.Controllers
             List<List<Cellule>> possibilities = boardGeneratorControllerV2.GetBoatPossibility(noHitCells, maxLength);
 
             var selectedPossibility = possibilities[Utils.RandomNumber(0, possibilities.Count - 1)];
+            // some errors here
             Cellule selectedCell = selectedPossibility[Utils.RandomNumber(0, selectedPossibility.Count - 1)];
-            return selectedCell;
+            var c = cellules.Find(c => c.Id == selectedCell.Id);
+            return c;
         }
 
         private Cellule FoundBoatCell(List<Cellule> cellules)
@@ -120,8 +122,12 @@ namespace BatailleNavalGinier.Controllers
 
         private Cellule CellByOrientation(Cellule cible, Orientation orientation, int add)
         {
-            if (cible.Xcoords + add > 4 || cible.Xcoords + add < 0) return null;
-            if (cible.Ycoords + add > 4 || cible.Ycoords + add < 0) return null;
+            if (orientation == Orientation.Horizontal &&
+                cible.Xcoords + add > 4 ||
+                cible.Xcoords + add < 0) return null;
+            if (orientation == Orientation.Vertical &&
+                cible.Ycoords + add > 4 ||
+                cible.Ycoords + add < 0) return null;
             return _cells[orientation == Orientation.Horizontal ? cible.Xcoords + add : cible.Xcoords][orientation == Orientation.Vertical ? cible.Ycoords + add : cible.Ycoords];
         }
 
@@ -132,7 +138,7 @@ namespace BatailleNavalGinier.Controllers
 
             foreach (List<Cellule> cells in cellsOfCells)
             {
-                var c = cells.Select(cell => cell.IsHit ? null : cell.Copy()).ToList();
+                var c = cells.Select(cell => cell.IsHit ? null : cell).ToList();
                 cellulesList.Add(c);
             }
 

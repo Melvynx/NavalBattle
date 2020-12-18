@@ -61,6 +61,7 @@ namespace BatailleNavalGinier.Controllers
                 }
             }
             return result;
+            
         }
         /// <summary>
         ///     Donne une list de list de cellule.
@@ -69,7 +70,7 @@ namespace BatailleNavalGinier.Controllers
         /// <param name="cell">cellule de base à tester</param>
         /// <param name="length">taille du bateau</param>
         /// <returns></returns>
-        private List<List<Cellule>> PossibilitiesBoatForCell(Cellule cell, List<List<Cellule>> nullCells, int length = 2)
+        private List<List<Cellule>> PossibilitiesBoatForCell(Cellule cell, List<List<Cellule>> cellules, int length = 2)
         {
             if (cell == null)
             {
@@ -86,9 +87,8 @@ namespace BatailleNavalGinier.Controllers
             for (int i = 1; i < length; i++)
             {
                 if (x + i > 4) break;
-                if (nullCells[x + i][y] == null) break;
-                nullCells[x + i][y].AddBoat(Orientation.Horizontal);
-                temp_cells.Add(nullCells[x + i][y]);
+                if (cellules[x + i][y] == null) break;
+                temp_cells.Add(cellules[x + i][y]);
             }
             if (temp_cells.Count == length)
             {
@@ -100,9 +100,8 @@ namespace BatailleNavalGinier.Controllers
             for (int i = 1; i < length; i++)
             {
                 if (x - i < 0) break;
-                if (nullCells[x - i][y] == null) break;
-                nullCells[x - i][y].AddBoat(Orientation.Horizontal);
-                temp_cells.Add(nullCells[x - i][y]);
+                if (cellules[x - i][y] == null) break;
+                temp_cells.Add(cellules[x - i][y]);
             }
             if (temp_cells.Count == length)
             {
@@ -114,9 +113,8 @@ namespace BatailleNavalGinier.Controllers
             for (int i = 1; i < length; i++)
             {
                 if (y + i > 4) break;
-                if (nullCells[x][y + i] == null) break;
-                nullCells[x][y + i].AddBoat(Orientation.Vertical);
-                temp_cells.Add(nullCells[x][y + i]);
+                if (cellules[x][y + i] == null) break;
+                temp_cells.Add(cellules[x][y + i]);
             }
             if (temp_cells.Count == length)
             {
@@ -128,9 +126,8 @@ namespace BatailleNavalGinier.Controllers
             for (int i = 1; i < length; i++)
             {
                 if (y - i < 0) break;
-                if (nullCells[x][y - i] == null) break;
-                nullCells[x][y - i].AddBoat(Orientation.Vertical);
-                temp_cells.Add(nullCells[x][y - i]);
+                if (cellules[x][y - i] == null) break;
+                temp_cells.Add(cellules[x][y - i]);
             }
             if (temp_cells.Count == length)
             {

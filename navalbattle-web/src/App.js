@@ -1,6 +1,7 @@
+import { BrowserRouter as Router } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import './App.css';
-import Home from './Home';
+import Routes from './Routes';
 import { NavalBattleContextProvider } from './hooks/NavalBattleProvider';
 
 const Container = styled.div`
@@ -18,11 +19,13 @@ const theme = {
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <NavalBattleContextProvider>
-        <Container>
-          <Home />
-        </Container>
-      </NavalBattleContextProvider>
+      <Router>
+        <NavalBattleContextProvider>
+          <Container>
+            <Routes />
+          </Container>
+        </NavalBattleContextProvider>
+      </Router>
     </ThemeProvider>
   );
 }

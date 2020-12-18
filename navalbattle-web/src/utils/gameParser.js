@@ -31,5 +31,7 @@ function parseCellules(cellules) {
     );
   }
 
+  // cellules.reduce(() => {}, []);
+
   return localCellules;
 }

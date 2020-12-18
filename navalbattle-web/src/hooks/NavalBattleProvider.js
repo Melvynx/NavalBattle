@@ -2,22 +2,27 @@ import React, { useEffect } from 'react';
 import useLocalStorageState from './useLocalStorageState';
 import { createGame, getGame, updateGameState } from '../api/game-api';
 import { gameParser } from '../utils/gameParser';
+import { useHistory } from 'react-router-dom';
 
 const NavalBattleContext = React.createContext({});
 
 export function NavalBattleContextProvider({ children }) {
   const [currentGameId, setCurrentGameId] = useLocalStorageState('current-game-id');
   const [currentGame, setCurrentGame] = React.useState();
+  const history = useHistory();
 
   const updateGame = React.useCallback(
     function () {
       if (currentGameId) {
         getGame(currentGameId).then((result) => {
-          result && setCurrentGame(gameParser(result));
+          if (result) {
+            setCurrentGame(gameParser(result));
+            history.push('/game');
+          }
         });
       }
     },
-    [currentGameId]
+    [currentGameId, history]
   );
 
   useEffect(() => {
@@ -27,19 +32,23 @@ export function NavalBattleContextProvider({ children }) {
   function startNewGame() {
     createGame().then((result) => {
       setCurrentGameId(result.game.id);
-
       setCurrentGame(gameParser(result));
+      history.push('/game');
     });
   }
 
   function stopGame() {
     setCurrentGame(null);
     setCurrentGameId(null);
+    history.push('/');
   }
 
-  const nextStep = React.useCallback((cell = null) => {
-    updateGameState(currentGameId, cell).then(() => updateGame());
-  }, [currentGameId, updateGame])
+  const nextStep = React.useCallback(
+    (cell = null) => {
+      updateGameState(currentGameId, cell).then(() => updateGame());
+    },
+    [currentGameId, updateGame]
+  );
 
   const onClickCellule = React.useCallback(
     (cell) => {

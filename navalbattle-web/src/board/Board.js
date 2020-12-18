@@ -12,7 +12,7 @@ const TableContainer = styled.tbody`
   display: flex;
 `;
 
-function Board({ board, isPlayer, isCurrentPlayer, onClick }) {
+function Board({ board, displayBoat, isCurrentPlayer, onClick }) {
   return (
     <Container>
       <table>
@@ -20,7 +20,7 @@ function Board({ board, isPlayer, isCurrentPlayer, onClick }) {
           {board.cellules.map((cells, i) => (
             <BoardLine
               onClick={onClick}
-              isPlayer={isPlayer}
+              displayBoat={displayBoat}
               cells={cells}
               isClickable={isCurrentPlayer}
               key={`${cells[0].id}${i}`}

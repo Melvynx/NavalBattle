@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Game from './board/Game';
 import { useNavalBattle } from './hooks/NavalBattleProvider';
 import { Button } from './styled-components/Button';
 
@@ -26,16 +25,8 @@ const HomeInfo = styled.p`
 `;
 
 function Home() {
-  const { currentGame, startNewGame } = useNavalBattle();
+  const { startNewGame } = useNavalBattle();
 
-  if (currentGame) {
-    return (
-      <Container>
-        <HomeTitle>Naval Battle</HomeTitle>
-        <Game />
-      </Container>
-    );
-  }
   return (
     <Container>
       <HomeTitle>Naval Battle</HomeTitle>

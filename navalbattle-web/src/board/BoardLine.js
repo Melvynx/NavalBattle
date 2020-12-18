@@ -1,11 +1,11 @@
 import Cellule from './Cellule';
 
-function BoardLine({ cells, isPlayer, isClickable, onClick }) {
+function BoardLine({ cells, displayBoat, isClickable, onClick }) {
   return (
     <tr>
       {cells.map((cell, index) => (
         <Cellule
-          isPlayer={isPlayer}
+          displayBoat={displayBoat}
           isClickable={isClickable}
           onClick={onClick}
           cell={cell}

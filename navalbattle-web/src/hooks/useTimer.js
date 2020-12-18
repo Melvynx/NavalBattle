@@ -22,7 +22,7 @@ export default function useTimer({ timeout, onFinish }) {
     }
     const interval = setInterval((prev) => setTimer((prev) => prev - 1), 1000);
     intervalRef.current = interval;
-  }, []);
+  }, [timeout]);
 
   React.useEffect(() => {
     return () => clearInterval(intervalRef.current);
