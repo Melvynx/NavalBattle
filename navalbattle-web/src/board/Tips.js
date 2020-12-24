@@ -6,6 +6,7 @@ const tips = [
   'Click on [Space] key to go next!',
   'Hover image to know what they mean',
   'Click on stop to leave the game and create an other one',
+  'You are the player 1, so you need to shoot on the board of the player 2 !',
 ];
 
 function useTips() {

@@ -1,13 +1,18 @@
 import { Route, Switch } from 'react-router-dom';
-import Game from './board/Game';
-import Home from './Home';
+import React from 'react';
+
+const Game = React.lazy(() => import(/* webpackChunkName: "Game" */ './board/Game'));
+
+const Home = React.lazy(() => import(/* webpackChunkName: "Home" */ './Home'));
 
 function Routes() {
   return (
-    <Switch>
-      <Route path="/game" component={Game} />
-      <Route path="/" component={Home} />
-    </Switch>
+    <React.Suspense fallback={<p>loading</p>}>
+      <Switch>
+        <Route path="/game" component={Game} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </React.Suspense>
   );
 }
 

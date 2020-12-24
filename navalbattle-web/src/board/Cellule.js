@@ -29,17 +29,19 @@ function Cellule({ cell, displayBoat, onClick, isClickable }) {
 
   return (
     <Container
-      onClick={() => isClickable && onClick(cell)}
+      onClick={() => isClickable && !cell.isHit && onClick?.(cell)}
       isClickable={isClickable}
     >
       <img
         alt="water"
         title={imageDescription[image]}
-        style={{ width: '100%', height: '100%' }}
+        className="fullWidthImage"
         src={image}
       />
     </Container>
   );
 }
+// OUI
+// OUI
 
 export default Cellule;

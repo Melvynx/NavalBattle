@@ -44,15 +44,19 @@ export function NavalBattleContextProvider({ children }) {
   }
 
   const nextStep = React.useCallback(
-    (cell = null) => {
-      updateGameState(currentGameId, cell).then(() => updateGame());
+    ({ cellule = null, customBoatPlace = false, cellules = null } = {}) => {
+      updateGameState(currentGameId, {
+        cellule,
+        customBoatPlace,
+        cellules,
+      }).then(() => updateGame());
     },
     [currentGameId, updateGame]
   );
 
   const onClickCellule = React.useCallback(
-    (cell) => {
-      updateGameState(currentGameId, cell).then(() => updateGame());
+    (cellule) => {
+      updateGameState(currentGameId, { cellule }).then(() => updateGame());
     },
     [currentGameId, updateGame]
   );

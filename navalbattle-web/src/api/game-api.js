@@ -33,18 +33,8 @@ export function getGame(id) {
   });
 }
 
-const fakeCell = {
-  id: 0,
-  idBoard: 0,
-  xcoords: 0,
-  ycoords: 0,
-  isBoat: false,
-  isHit: false,
-  orientation: 0,
-};
-
-export function updateGameState(id, cell) {
-  let body = stringifyJson(cell || fakeCell);
+export function updateGameState(id, datas) {
+  let body = stringifyJson(datas);
 
   return fetch(`${API_URL}/gamestate/${id}`, {
     method: 'PUT',

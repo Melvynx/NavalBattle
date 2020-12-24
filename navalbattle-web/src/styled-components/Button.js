@@ -7,6 +7,8 @@ import { getColorTheme } from './props';
  */
 const Button = styled.button`
   background-color: ${(props) => getColorTheme(props).main};
+  margin: ${(props) => props.margin || null};
+  width: ${(props) => (props.fullWidth ? '100%' : null)};
   padding-top: 0.75rem;
   line-height: 1.5rem;
   padding-bottom: 0.75rem;
