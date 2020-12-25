@@ -8,7 +8,12 @@ function BoardLine({ cells, displayBoat, isClickable, onClick }) {
           displayBoat={displayBoat}
           isClickable={isClickable}
           onClick={onClick}
-          cell={cell}
+          isHit={cell.isHit}
+          isBoat={cell.isBoat}
+          isDeadBoat={cell.isDeadBoat}
+          orientation={cell.orientation}
+          id={cell.id}
+          boardId={cell.boardId}
           key={cell.id}
         />
       ))}

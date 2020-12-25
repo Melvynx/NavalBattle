@@ -6,7 +6,7 @@ import PlaceBoat from '../place-boat/PlaceBoat';
 import FloatButton from '../styled-components/FloatButton';
 import { TitleH2 } from '../styled-components/Typography';
 import Board from './Board';
-import { GameStates } from './datas';
+import { GameStates } from './stateDatas';
 import GameState from './GameState';
 import PlaceBoatMenu from '../place-boat/PlaceBoatMenu';
 import Tips from './Tips';
@@ -42,9 +42,7 @@ function Game() {
   return (
     <Container>
       <GameTitle>Naval Battle {currentGame.id}</GameTitle>
-      <FloatButton top={-4} left={-4} onClick={stopGame}>
-        Stop
-      </FloatButton>
+      <FloatButton onClick={stopGame}>Stop</FloatButton>
       {gameState === GameStates.WAITING ? (
         <PlaceBoatMenu />
       ) : gameState === GameStates.PLACE_BOAT ? (

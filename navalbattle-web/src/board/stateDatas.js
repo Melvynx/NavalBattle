@@ -20,11 +20,6 @@ export const GameStates = Object.freeze({
 });
 
 export const gameStatesData = {
-  [GameStates.PLACE_BOAT]: {
-    text: 'Put your boat 🛳',
-    button: 'I finish',
-    buttonActive: false,
-  },
   [GameStates.WAITING]: {
     text: 'Waiting...',
     button: 'Ready!',
@@ -40,13 +35,13 @@ export const gameStatesData = {
   [GameStates.PLAYER2_HIT]: {
     text: 'Player 2 hit 💣',
     button: 'next',
-    time: 2,
+    time: 3,
     buttonActive: true,
   },
   [GameStates.PLAYER2_SINK]: {
     text: 'Player 2 sink 💧',
     button: 'next',
-    time: 2,
+    time: 1,
     buttonActive: true,
   },
   [GameStates.PLAYER2_WIN]: {
@@ -64,13 +59,13 @@ export const gameStatesData = {
   [GameStates.PLAYER1_HIT]: {
     text: 'Player 1 hit 💣',
     button: 'next',
-    time: 2,
+    time: 3,
     buttonActive: true,
   },
   [GameStates.PLAYER1_SINK]: {
     text: 'Player 1 sink 💧',
     button: 'next',
-    time: 2,
+    time: 1,
     buttonActive: true,
   },
   [GameStates.PLAYER1_WIN]: {

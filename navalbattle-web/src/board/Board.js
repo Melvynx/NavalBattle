@@ -15,7 +15,7 @@ const TableContainer = styled.tbody`
 function Board({ board, displayBoat, isCurrentPlayer, onClick }) {
   return (
     <Container>
-      <table>
+      <table style={{ borderCollapse: 'collapse' }}>
         <TableContainer>
           {board.cellules.map((cells, i) => (
             <BoardLine

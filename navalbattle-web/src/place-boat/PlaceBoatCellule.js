@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { imageDescription } from '../board/datas';
+import { imageDescription } from '../board/stateDatas';
 import WaterImage from '../images/water.jpg';
 import BoatInterogation from '../images/boat_interogation.jpg';
 import BoatImageHorizontal from '../images/boat_h.jpg';

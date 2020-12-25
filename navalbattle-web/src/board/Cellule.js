@@ -1,29 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getCellImage, imageDescription } from './datas';
+import { getCellImage, imageDescription } from './stateDatas';
 
 const Container = styled.td`
   width: 50px;
   height: 50px;
-  border: 1px solid white;
+  border: 1px solid #5cc1ef;
   display: flex;
+  cursor: ${(props) => props.isClickable && 'pointer'};
   &:hover {
-    ${(props) =>
-      props.isClickable && {
-        cursor: 'pointer',
-      }}
-    border: 1px solid ${(props) => props?.theme?.primary.main}
+    border: 1px solid ${(props) => props?.theme?.primary.main};
   }
 `;
+// I pass native props for not render component on change
+function Cellule({
+  isHit,
+  isBoat,
+  isDeadBoat,
+  orientation,
+  displayBoat,
+  id,
+  boardId,
+  onClick,
+  isClickable,
+}) {
+  const cell = { id, isHit, isBoat, isDeadBoat, orientation, boardId };
 
-function Cellule({ cell, displayBoat, onClick, isClickable }) {
-  if (!cell) {
+  if (!cell)
     return (
       <Container>
         <span>Err.</span>
       </Container>
     );
-  }
 
   const image = getCellImage(cell, displayBoat);
 
@@ -41,7 +49,5 @@ function Cellule({ cell, displayBoat, onClick, isClickable }) {
     </Container>
   );
 }
-// OUI
-// OUI
 
-export default Cellule;
+export default React.memo(Cellule);
