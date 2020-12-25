@@ -35,6 +35,15 @@
             return new Cellule(Id, BoardId, Xcoords, Ycoords, IsBoat, IsHit);
         }
 
+        public void CopyProps(Cellule cell)
+        {
+            IsBoat = cell.IsBoat;
+            BoatIdentificator = cell.BoatIdentificator;
+            Orientation = cell.Orientation;
+            IsDeadBoat = cell.IsDeadBoat;
+            IsHit = cell.IsHit;
+        }
+
         public void AddBoat(Orientation orientation, string boatIdentificator = "")
         {
             IsBoat = true;

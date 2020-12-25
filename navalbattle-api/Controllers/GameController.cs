@@ -87,7 +87,7 @@ namespace BatailleNavalGinier.Controllers
 
             var boardPlayer1 = new Board(_boardController.GetUniqueId(), game.Id, "player1");
             var boardPlayer2 = new Board(_boardController.GetUniqueId() + 1, game.Id, "player2");
-            await _boardController.CreateBoard(boardPlayer1);
+            await _boardController.CreateBoard(boardPlayer1, false);
             await _boardController.CreateBoard(boardPlayer2);
 
             List<BoardJson> boardStates = _boardController.GetBoardByGame(game.Id);
@@ -139,6 +139,14 @@ namespace BatailleNavalGinier.Controllers
             return _context.Games.ToList().Find(g => g.Id == id);
         }
 
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public void SetRandomCellToBoard(long gameId, string identifier)
+        {
+            _boardController.SetRandomCell(gameId, identifier);
+        }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [NonAction]
         public bool IsGameWin(long idBoard)
@@ -151,6 +159,14 @@ namespace BatailleNavalGinier.Controllers
         public Cellule RunBoardIAPlay(long idGame)
         {
             return _boardController.IAAutoPlay(idGame);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public void EditGameState(Game game, GameState gameState)
+        {
+            game.GameState = gameState;
+            EditGame(game.Id, game);
         }
 
         private bool GameExists(long id)

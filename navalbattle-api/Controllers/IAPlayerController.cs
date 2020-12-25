@@ -94,6 +94,9 @@ namespace BatailleNavalGinier.Controllers
 
             List<Cellule> solutionNotHit = solution.FindAll(c => c!= null && !c.IsHit);
 
+            // TOdO : change this 
+            if (solutionNotHit.Count == 0) return cible;
+
             return solutionNotHit[Utils.RandomNumber(0, solutionNotHit.Count - 1)];
         }
 

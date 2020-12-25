@@ -151,6 +151,7 @@ namespace BatailleNavalGinier.Controllers
                     cellCount++;
                 }
             }
+
             if (randomBoat)
             {
                 new BoardGeneratorControllerV2().SetRandomBoat(cellules);
@@ -183,7 +184,6 @@ namespace BatailleNavalGinier.Controllers
             return !cells.Any(c => c.IsBoat && !c.IsHit);
         }
 
-
         [ApiExplorerSettings(IgnoreApi = true)]
         [NonAction]
         public Cellule IAAutoPlay(long idGame)
@@ -206,6 +206,16 @@ namespace BatailleNavalGinier.Controllers
         private bool BoardExists(long id)
         {
             return _context.Boards.Any(e => e.Id == id);
+        }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public void SetRandomCell(long gameId, string identifier)
+        {
+            var boards = _context.Boards.ToList().FindAll(b => b.IdGame == gameId);
+            Board board = boards.FirstOrDefault(b => b.Player == identifier);
+            _celluleController.SetRandomBoatToCells(board.Id);
         }
 
     }

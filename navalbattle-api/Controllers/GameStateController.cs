@@ -21,37 +21,56 @@ namespace BatailleNavalGinier.Controllers
             _celluleController = celluleController;
         }
 
-        // GET: api/GameState
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/GameState/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/GameState
         [HttpPost]
         public void Post([FromBody] Cellule cellule, GameState gameState)
         {
         }
 
+        public class PutParams
+        {
+            public Cellule Cellule { get; set; }
+            public List<List<Cellule>> Cellules { get; set; }
+            public bool CustomBoatPlace { get; set; }
+
+            public PutParams()
+            {
+            }
+        }
+
         // PUT: api/gamestate/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Game>> Put(int id, [FromBody] Cellule cellule)
+        public async Task<ActionResult<Game>> Put(int id, [FromBody] PutParams putParams)
         {
             Game game = _gameController.FindGameById(id);
+            Cellule cellule = putParams.Cellule;
 
             switch(game.GameState)
             {
                 case GameState.WAITING:
-                    game.GameState = GameState.PLAYER1_TURN;
-                    _gameController.EditGame(game.Id, game);
+                    if (putParams.CustomBoatPlace)
+                    {
+                        _gameController.EditGameState(game, GameState.PLACE_BOAT);
+                    } else
+                    {
+                        _gameController.SetRandomCellToBoard(game.Id, "player1");
+                        _gameController.EditGameState(game, GameState.PLAYER1_TURN);
+                    }
+                    break;
+                case GameState.PLACE_BOAT:
+                    if (putParams.Cellules.Count == 0)
+                        throw new Exception("Missing params : [List<Cellule> Cellules]");
+
+                    foreach (List<Cellule> boat in putParams.Cellules)
+                    {
+                        string identificator = $"boat-{boat.Count}-{Utils.RandomString(5)}";
+                        foreach (Cellule boatCell in boat)
+                        {
+                            boatCell.BoatIdentificator = identificator;
+                            _celluleController.SafeEditCellule(boatCell);
+                        }
+                    }
+                    _gameController.EditGameState(game, GameState.PLAYER1_TURN);
                     break;
                 case GameState.PLAYER1_TURN:
                     Cellule cell = _celluleController.FindCelluleById(cellule.Id);
@@ -64,41 +83,31 @@ namespace BatailleNavalGinier.Controllers
 
                     bool isWin = _gameController.IsGameWin(cellule.BoardId);
 
-                    game.GameState = isWin ? GameState.PLAYER1_WIN : cell.IsBoat ? GameState.PLAYER1_HIT : GameState.PLAYER1_SINK;
-                    _gameController.EditGame(game.Id, game);
+                    _gameController.EditGameState(game,
+                        isWin ? GameState.PLAYER1_WIN : cell.IsBoat ? GameState.PLAYER1_HIT : GameState.PLAYER1_SINK);
                     break;
                 case GameState.PLAYER1_HIT:
-                    game.GameState = GameState.PLAYER2_TURN;
-                    _gameController.EditGame(game.Id, game);
+                    _gameController.EditGameState(game, GameState.PLAYER2_TURN);
                     break;
                 case GameState.PLAYER1_SINK:
-                    game.GameState = GameState.PLAYER2_TURN;
-                    _gameController.EditGame(game.Id, game);
+                    _gameController.EditGameState(game, GameState.PLAYER2_TURN);
                     break;
                 case GameState.PLAYER2_HIT:
-                    game.GameState = GameState.PLAYER1_TURN;
-                    _gameController.EditGame(game.Id, game);
+                    _gameController.EditGameState(game, GameState.PLAYER1_TURN);
                     break;
                 case GameState.PLAYER2_SINK:
-                    game.GameState = GameState.PLAYER1_TURN;
-                    _gameController.EditGame(game.Id, game);
+                    _gameController.EditGameState(game, GameState.PLAYER1_TURN);
                     break;
                 case GameState.PLAYER2_TURN:
                     cell = _gameController.RunBoardIAPlay(game.Id);
 
                     isWin = _gameController.IsGameWin(cell.BoardId);
-                    game.GameState = isWin ? GameState.PLAYER2_WIN : cell.IsBoat ? GameState.PLAYER2_HIT : GameState.PLAYER2_SINK;
-                    _gameController.EditGame(game.Id, game);
+                    _gameController.EditGameState(game,
+                        isWin ? GameState.PLAYER2_WIN : cell.IsBoat ? GameState.PLAYER2_HIT : GameState.PLAYER2_SINK);
                     break;
             }
 
             return game;
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

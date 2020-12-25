@@ -139,6 +139,15 @@ namespace BatailleNavalGinier.Controllers
 
         [ApiExplorerSettings(IgnoreApi = true)]
         [NonAction]
+        public void SafeEditCellule(Cellule cell)
+        {
+            Cellule trackedCellule = _context.Cellules.ToList().Find(c => c.Id == cell.Id);
+            trackedCellule.CopyProps(cell);
+            EditCellule(trackedCellule);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
         public Cellule FindCelluleById(long id)
         {
             return _context.Cellules.ToList().Find(g => g.Id == id);
@@ -161,6 +170,20 @@ namespace BatailleNavalGinier.Controllers
                     cell.IsDeadBoat = true;
                     EditCellule(cell);
                 } 
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
+        public void SetRandomBoatToCells(long boardId)
+        {
+            var cellules = _context.Cellules.ToList().FindAll(c => c.BoardId == boardId);
+
+            new BoardGeneratorControllerV2().SetRandomBoat(cellules);
+
+            foreach (Cellule cell in cellules)
+            {
+                EditCellule(cell);
             }
         }
 
