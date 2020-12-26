@@ -21,21 +21,11 @@ namespace BatailleNavalGinier.Controllers
             _celluleController = celluleController;
         }
 
-        // POST: api/GameState
-        [HttpPost]
-        public void Post([FromBody] Cellule cellule, GameState gameState)
-        {
-        }
-
         public class PutParams
         {
             public Cellule Cellule { get; set; }
             public List<List<Cellule>> Cellules { get; set; }
             public bool CustomBoatPlace { get; set; }
-
-            public PutParams()
-            {
-            }
         }
 
         // PUT: api/gamestate/5

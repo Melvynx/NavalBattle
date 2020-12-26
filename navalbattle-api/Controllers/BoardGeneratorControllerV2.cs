@@ -24,8 +24,8 @@ namespace BatailleNavalGinier.Controllers
 
                 List<List<Cellule>> waterCells = GetWaterCells(cellsOfCells);
                 var possibilities = GetBoatPossibility(waterCells, boatLength);
-                if (possibilities.Count == 1) {
-                    continue;
+                if (possibilities.Count == 0) {
+                    throw new Exception("0 possibility was found. It shouldn't be possible.");
                 }
 
                 var selectedPossibility = possibilities[Utils.RandomNumber(0, possibilities.Count - 1)];

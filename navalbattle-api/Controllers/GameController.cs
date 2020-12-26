@@ -47,36 +47,6 @@ namespace BatailleNavalGinier.Controllers
             return gameJson;
         }
 
-        // PUT: api/Game/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(long id, Game game)
-        {
-            if (id != game.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(game).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Game
         [HttpPost]
         public async Task<ActionResult<GameJson>> PostGame(Game game)
@@ -96,25 +66,9 @@ namespace BatailleNavalGinier.Controllers
             return gameJson;
         }
 
-        // DELETE: api/Game/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Game>> DeleteGame(long id)
-        {
-            var game = await _context.Games.FindAsync(id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
-
-            return game;
-        }
-
         [ApiExplorerSettings(IgnoreApi = true)]
         [NonAction]
-        public void EditGame(long id, Game game)
+        public void EditGame(Game game)
         {
             var result = _context.Games.SingleOrDefault(g => g.Id == game.Id);
             if (result != null)
@@ -134,7 +88,7 @@ namespace BatailleNavalGinier.Controllers
 
         [ApiExplorerSettings(IgnoreApi = true)]
         [NonAction]
-        public Game FindGameById(long id, string test = "")
+        public Game FindGameById(long id)
         {
             return _context.Games.ToList().Find(g => g.Id == id);
         }
@@ -166,12 +120,7 @@ namespace BatailleNavalGinier.Controllers
         public void EditGameState(Game game, GameState gameState)
         {
             game.GameState = gameState;
-            EditGame(game.Id, game);
-        }
-
-        private bool GameExists(long id)
-        {
-            return _context.Games.Any(e => e.Id == id);
+            EditGame(game);
         }
     }
 }
