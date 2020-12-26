@@ -14,10 +14,13 @@ export function NavalBattleContextProvider({ children }) {
   const updateGame = React.useCallback(
     function () {
       if (currentGameId) {
+        history.push('/loading');
         getGame(currentGameId).then((result) => {
           if (result) {
             setCurrentGame(gameParser(result));
             history.push('/game');
+          } else {
+            history.push('/');
           }
         });
       }
@@ -30,6 +33,7 @@ export function NavalBattleContextProvider({ children }) {
   }, [updateGame]);
 
   function startNewGame() {
+    history.push('/loading');
     createGame().then((result) => {
       setCurrentGameId(result.game.id);
       setCurrentGame(gameParser(result));
@@ -72,10 +76,9 @@ export function NavalBattleContextProvider({ children }) {
 
 export function useNavalBattle() {
   const context = React.useContext(NavalBattleContext);
-  if (!context) {
+  if (!context)
     throw new Error(
       'useNavalBattle should be used within a NavalBattleContextProvider'
     );
-  }
   return context;
 }

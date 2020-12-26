@@ -1,22 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import Box from '../styled-components/Box';
 import BoardLine from './BoardLine';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const TableContainer = styled.tbody`
-  display: flex;
-`;
 
 function Board({ board, displayBoat, isCurrentPlayer, onClick }) {
   return (
-    <Container>
+    <Box flexDirection="column" alignItems="center">
       <table style={{ borderCollapse: 'collapse' }}>
-        <TableContainer>
+        <Box>
           {board.cellules.map((cells, i) => (
             <BoardLine
               onClick={onClick}
@@ -26,9 +16,9 @@ function Board({ board, displayBoat, isCurrentPlayer, onClick }) {
               key={`${cells[0].id}${i}`}
             />
           ))}
-        </TableContainer>
+        </Box>
       </table>
-    </Container>
+    </Box>
   );
 }
 

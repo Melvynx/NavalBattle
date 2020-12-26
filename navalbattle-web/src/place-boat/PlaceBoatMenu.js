@@ -1,18 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useNavalBattle } from '../hooks/NavalBattleProvider';
+import Box from '../styled-components/Box';
 import { Button } from '../styled-components/Button';
 import { TitleH2 } from '../styled-components/Typography';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default function PlaceBoatMenu() {
   const { nextStep } = useNavalBattle();
   return (
-    <Container>
+    <Box flexDirection="column">
       <TitleH2>Do you want to place your boats?</TitleH2>
       <Button color="primary" onClick={() => nextStep({ customBoatPlace: true })}>
         Yes, I want to place my boats
@@ -24,6 +19,6 @@ export default function PlaceBoatMenu() {
       >
         No, I prefer that you place them randomly.
       </Button>
-    </Container>
+    </Box>
   );
 }

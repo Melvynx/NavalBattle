@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavalBattle } from '../hooks/NavalBattleProvider';
 import { TitleH2 } from '../styled-components/Typography';
 import Board from './Board';
-import { GameStates } from './stateDatas';
-import GameState from './GameState';
+import { GameStates } from './boardServices';
+import GameState from '../game/GameState';
 import Tips from './Tips';
 
 function GameView() {

@@ -1,16 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import Box from '../styled-components/Box';
 import PlaceBoatCellule from './PlaceBoatCellule';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const TableContainer = styled.tbody`
-  display: flex;
-`;
 
 export function PlaceBoatBoardLine({
   cells,
@@ -36,9 +26,9 @@ export function PlaceBoatBoardLine({
 
 function PlaceBoatBoard({ board, onClick, currentBoat, maxBoatSize }) {
   return (
-    <Container>
+    <Box flexDirection="column" alignItems="center">
       <table>
-        <TableContainer>
+        <Box>
           {board.cellules.map((cells, i) => (
             <PlaceBoatBoardLine
               currentBoat={currentBoat}
@@ -48,9 +38,9 @@ function PlaceBoatBoard({ board, onClick, currentBoat, maxBoatSize }) {
               maxBoatSize={maxBoatSize}
             />
           ))}
-        </TableContainer>
+        </Box>
       </table>
-    </Container>
+    </Box>
   );
 }
 

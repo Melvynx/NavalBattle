@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getCellImage, imageDescription } from './stateDatas';
+import { getCellImage, imageDescription } from './boardServices';
 
 const Container = styled.td`
   width: 50px;

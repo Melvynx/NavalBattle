@@ -3,7 +3,6 @@ import { getColorTheme } from './props';
 
 /*
  * {color} "primary" | "secondary" Default : "primary"
- * {size} "small" | "normal" Default "normal"
  */
 const Button = styled.button`
   background-color: ${(props) => getColorTheme(props).main};

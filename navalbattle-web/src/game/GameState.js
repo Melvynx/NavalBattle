@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavalBattle } from '../hooks/NavalBattleProvider';
 import useTimer from '../hooks/useTimer';
 import { Button } from '../styled-components/Button';
-import { gameStatesData } from './stateDatas';
+import { gameStatesData } from '../board/boardServices';
 
 const GameStateHeader = styled.h2`
   font-size: 48px;
