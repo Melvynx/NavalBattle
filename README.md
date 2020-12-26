@@ -22,6 +22,13 @@ Just run `yarn start` and turn api on 🚀.
 
 Be warning: the api **url** is in the file `info.js`. Change it with your url.
 
+## IA
+
+My API simulates an player. She can play VS you!
+She can :
+- generated a correct beteau placement
+- play against a player
+
 ## End
 
 My app is not made to be secure 🔓, but for local use. It is so easily possible to brain the api to, for example, modify another game from another player because there is no token.
