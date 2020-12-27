@@ -24,9 +24,9 @@ Be warning: the api **url** is in the file `info.js`. Change it with your url.
 
 ## IA
 
-My API simulates an player. She can play VS you!
+My API simulates a player. She can play VS you!
 She can :
-- generated a correct beteau placement
+- generated a correct boat placement
 - play against a player
 
 ## End
