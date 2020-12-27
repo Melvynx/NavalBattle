@@ -16,7 +16,7 @@ For now, to start this you need to have **visual studio** and run project inside
 
 ## Fronted
 
-It's a simple `create-react-app`⚛️!
+It's a simple `create-react-app` ⚛️ !
 
 Just run `yarn start` and turn api on 🚀.
 
