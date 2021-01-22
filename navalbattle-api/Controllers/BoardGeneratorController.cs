@@ -29,7 +29,7 @@ namespace BatailleNavalGinier.Controllers
                         {
                             isCellExist = cellules.Any(cell => cell.IsBoat && cell.Xcoords == coord.X && cell.Ycoords == coord.Y);
                         }
-                        catch (NullReferenceException e)
+                        catch (NullReferenceException)
                         {
                             Console.WriteLine("Err 38:BoardGeneratorController");
                         }
